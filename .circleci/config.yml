@@ -1,20 +1,33 @@
 version: 2
 jobs:
-  first_workflow:
+  build: 
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: circleci/node:8.9
     steps:
       - checkout
-      - run: echo "Test workflow"
-  second_workflow:
+      - run: echo "installing packages"
+      - run: yarn install
+      - run: CI=true yarn build
+  test:
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: circleci/node:8.9
     steps:
       - checkout
-      - run: echo "Test workflow"
+      - run: echo "Testing app..."
+      - run: yarn install
+      - run: yarn test --passWithNoTests
+  echotest:
+    docker:
+      - image: circleci/node:8.9
+    steps:
+      - checkout
+      - run: echo "will test the app now..."
 workflows:
   version: 2
-  first_second:
+  build_test_lint:
     jobs:
-      - first_workflow
-      - second_workflow
+      - build
+      - echotest
+      - test:
+        requires:
+          - echotest
