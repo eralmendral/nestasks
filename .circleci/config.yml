@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9
+      - image: circleci/node:14.8
     steps:
       - checkout
       - run: echo "installing packages"
@@ -10,7 +10,7 @@ jobs:
       - run: CI=true yarn build
   test:
     docker:
-      - image: circleci/node:8.9
+      - image: circleci/node:14.8
     steps:
       - checkout
       - run: echo "Testing app..."
