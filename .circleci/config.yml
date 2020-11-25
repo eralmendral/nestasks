@@ -1,8 +1,8 @@
 version: 2
 jobs:
-  build: 
+  build:
     docker:
-      - image: circleci/node:8.9
+      - image: 'circleci/node:8.9'
     steps:
       - checkout
       - run: echo "installing packages"
@@ -10,7 +10,7 @@ jobs:
       - run: CI=true yarn build
   test:
     docker:
-      - image: circleci/node:8.9
+      - image: 'circleci/node:8.9'
     steps:
       - checkout
       - run: echo "Testing app..."
@@ -18,7 +18,7 @@ jobs:
       - run: yarn test --passWithNoTests
   echotest:
     docker:
-      - image: circleci/node:8.9
+      - image: 'circleci/node:8.9'
     steps:
       - checkout
       - run: echo "will test the app now..."
@@ -28,6 +28,6 @@ workflows:
     jobs:
       - build
       - echotest
-      - test:
+      - test: null
         requires:
           - echotest
